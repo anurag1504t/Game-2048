@@ -5,7 +5,6 @@ int const BOARD_SIZE = 4;
 
 class Game {
     int score;
-    int highest_score;
     int board[BOARD_SIZE][BOARD_SIZE];
 
     // Member Functions
@@ -22,8 +21,8 @@ class Game {
 public:
     Game() {
         score = 0;
-        for(int i=0;i<BOARD_SIZE;i++) {
-            for(int j=0;j<BOARD_SIZE;j++) {
+        for (int i = 0; i < BOARD_SIZE; i++) {
+            for (int j = 0; j < BOARD_SIZE; j++) {
                 board[i][j] = 0;
             }
         }
@@ -38,25 +37,30 @@ public:
             cout << "Enter move (L, R, U, D): ";
             cin >> move;
             switch (move) {
-                case 'L':
-                case 'l':
-                    move_left();
-                    break;
-                case 'R':
-                case 'r':
-                    move_right();
-                    break;
-                case 'U':
-                case 'u':
-                    move_up();
-                    break;
-                case 'D':
-                case 'd':
-                    move_down();
-                    break;
-                default:
-                    cout << "Invalid move! Please enter L, R, U, or D." << endl;
-                    break;
+            case 'L':
+            case 'l':
+                move_left();
+                break;
+            case 'R':
+            case 'r':
+                move_right();
+                break;
+            case 'U':
+            case 'u':
+                move_up();
+                break;
+            case 'D':
+            case 'd':
+                move_down();
+                break;
+            case 'Q':
+            case 'q':
+                print_board();
+                exit(0);
+                break;
+            default:
+                cout << "Invalid move! Please enter L, R, U, or D." << endl;
+                break;
             }
         }
         print_board();
@@ -81,7 +85,7 @@ void Game::add_tile() {
 }
 
 void Game::print_board() {
-    cout << "Score: " << score << endl;
+    cout << "\nScore: " << score << endl;
     for (int i = 0; i < BOARD_SIZE; i++) {
         for (int j = 0; j < BOARD_SIZE; j++) {
             cout << board[i][j] << "\t";
@@ -134,99 +138,97 @@ int Game::get_score() {
     return score;
 }
 
-
 void Game::move_left() {
     bool moved = false;
-    for(int i=0;i<4;i++){
-		for(int j=0;j<4;j++){
-			if(!board[i][j]){
-				for(int k=j+1;k<4;k++){
-					if(board[i][k]){
-						board[i][j]=board[i][k];
-						board[i][k]=0;
+    for (int i = 0; i < 4; i++) {
+        for (int j = 0; j < 4; j++) {
+            if (!board[i][j]) {
+                for (int k = j + 1; k < 4; k++) {
+                    if (board[i][k]) {
+                        board[i][j] = board[i][k];
+                        board[i][k] = 0;
                         moved = true;
-						break;
-					}
-				}
-			}
-		}
-	}
+                        break;
+                    }
+                }
+            }
+        }
+    }
 
-    for(int i=0;i<4;i++){
-		for(int j=0;j<3;j++){
-			if(board[i][j] && board[i][j]==board[i][j+1]){
-				board[i][j]=board[i][j] + board[i][j+1];
-				board[i][j+1]=0;
-				score+=board[i][j];
+    for (int i = 0; i < 4; i++) {
+        for (int j = 0; j < 3; j++) {
+            if (board[i][j] && board[i][j] == board[i][j + 1]) {
+                board[i][j] = board[i][j] + board[i][j + 1];
+                board[i][j + 1] = 0;
+                score += board[i][j];
                 moved = true;
-			}
-		}
-	}
+            }
+        }
+    }
 
-    for(int i=0;i<4;i++){
-		for(int j=0;j<4;j++){
-			if(!board[i][j]){
-				for(int k=j+1;k<4;k++){
-					if(board[i][k]){
-						board[i][j]=board[i][k];
-						board[i][k]=0;
+    for (int i = 0; i < 4; i++) {
+        for (int j = 0; j < 4; j++) {
+            if (!board[i][j]) {
+                for (int k = j + 1; k < 4; k++) {
+                    if (board[i][k]) {
+                        board[i][j] = board[i][k];
+                        board[i][k] = 0;
                         moved = true;
-						break;
-					}
-				}
-			}
-		}
-	}
+                        break;
+                    }
+                }
+            }
+        }
+    }
     if (moved) {
         add_tile();
     }
 }
 
-
 void Game::move_right() {
     bool moved = false;
 
-    for(int i=0;i<4;i++){
-		for(int j=3;j>=0;j--){
-			if(!board[i][j]){
-				for(int k=j-1;k>=0;k--){
-					if(board[i][k]){
-						board[i][j]=board[i][k];
-						board[i][k]=0;
+    for (int i = 0; i < 4; i++) {
+        for (int j = 3; j >= 0; j--) {
+            if (!board[i][j]) {
+                for (int k = j - 1; k >= 0; k--) {
+                    if (board[i][k]) {
+                        board[i][j] = board[i][k];
+                        board[i][k] = 0;
                         moved = true;
-						break;
-					}
-				}
-			}
-		}
-	}
+                        break;
+                    }
+                }
+            }
+        }
+    }
 
-    for(int i=0;i<4;i++){
-		for(int j=3;j>0;j--){
-			if(board[i][j] && board[i][j]==board[i][j-1]){
-				board[i][j]=board[i][j] + board[i][j-1];
-				board[i][j-1]=0;
-				score=score + board[i][j];
+    for (int i = 0; i < 4; i++) {
+        for (int j = 3; j > 0; j--) {
+            if (board[i][j] && board[i][j] == board[i][j - 1]) {
+                board[i][j] = board[i][j] + board[i][j - 1];
+                board[i][j - 1] = 0;
+                score = score + board[i][j];
                 moved = true;
-			}
-		}
-	}
+            }
+        }
+    }
 
-    for(int i=0;i<4;i++){
-		for(int j=3;j>=0;j--){
-			if(!board[i][j]){
-				for(int k=j-1;k>=0;k--){
-					if(board[i][k]){
-						board[i][j]=board[i][k];
-						board[i][k]=0;
+    for (int i = 0; i < 4; i++) {
+        for (int j = 3; j >= 0; j--) {
+            if (!board[i][j]) {
+                for (int k = j - 1; k >= 0; k--) {
+                    if (board[i][k]) {
+                        board[i][j] = board[i][k];
+                        board[i][k] = 0;
                         moved = true;
-						break;
-					}
-				}
-			}
-		}
-	}
-    
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
     if (moved) {
         add_tile();
     }
@@ -235,47 +237,47 @@ void Game::move_right() {
 void Game::move_up() {
     bool moved = false;
 
-    for(int i=0;i<4;i++){
-		for(int j=0;j<4;j++){
-			if(!board[j][i]){
-				for(int k=j+1;k<4;k++){
-					if(board[k][i]){
-						board[j][i]=board[k][i];
-						board[k][i]=0;
+    for (int i = 0; i < 4; i++) {
+        for (int j = 0; j < 4; j++) {
+            if (!board[j][i]) {
+                for (int k = j + 1; k < 4; k++) {
+                    if (board[k][i]) {
+                        board[j][i] = board[k][i];
+                        board[k][i] = 0;
                         moved = true;
-						break;
-					}
-				}
-			}
-		}
-	}
+                        break;
+                    }
+                }
+            }
+        }
+    }
 
-    for(int i=0;i<4;i++){
-		for(int j=0;j<3;j++){
-			if(board[j][i] && board[j][i]==board[j+1][i]){
-				board[j][i]=board[j][i] + board[j+1][i];
-				board[j+1][i]=0;
-				score+=board[j][i];
+    for (int i = 0; i < 4; i++) {
+        for (int j = 0; j < 3; j++) {
+            if (board[j][i] && board[j][i] == board[j + 1][i]) {
+                board[j][i] = board[j][i] + board[j + 1][i];
+                board[j + 1][i] = 0;
+                score += board[j][i];
                 moved = true;
-			}
-		}
-	}
+            }
+        }
+    }
 
-    for(int i=0;i<4;i++){
-		for(int j=0;j<4;j++){
-			if(!board[j][i]){
-				for(int k=j+1;k<4;k++){
-					if(board[k][i]){
-						board[j][i]=board[k][i];
-						board[k][i]=0;
+    for (int i = 0; i < 4; i++) {
+        for (int j = 0; j < 4; j++) {
+            if (!board[j][i]) {
+                for (int k = j + 1; k < 4; k++) {
+                    if (board[k][i]) {
+                        board[j][i] = board[k][i];
+                        board[k][i] = 0;
                         moved = true;
-						break;
-					}
-				}
-			}
-		}
-	}
-    
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
     if (moved) {
         add_tile();
     }
@@ -283,41 +285,41 @@ void Game::move_up() {
 
 void Game::move_down() {
     bool moved = false;
-    for(int i=0;i<4;i++){
-		for(int j=3;j>=0;j--){
-			if(!board[j][i]){
-				for(int k=j-1;k>=0;k--){
-					if(board[k][i]){
-						board[j][i]=board[k][i];
-						board[k][i]=0;
+    for (int i = 0; i < 4; i++) {
+        for (int j = 3; j >= 0; j--) {
+            if (!board[j][i]) {
+                for (int k = j - 1; k >= 0; k--) {
+                    if (board[k][i]) {
+                        board[j][i] = board[k][i];
+                        board[k][i] = 0;
                         moved = true;
-						break;
-					}
-				}
+                        break;
+                    }
+                }
             }
         }
     }
-    for(int i=0;i<4;i++){
-		for(int j=3;j>0;j--){
-			if(board[j][i] && board[j][i]==board[j-1][i]){
-				board[j][i]=board[j][i] + board[j-1][i];
-				board[j-1][i]=0;
-				score+=board[j][i];
+    for (int i = 0; i < 4; i++) {
+        for (int j = 3; j > 0; j--) {
+            if (board[j][i] && board[j][i] == board[j - 1][i]) {
+                board[j][i] = board[j][i] + board[j - 1][i];
+                board[j - 1][i] = 0;
+                score += board[j][i];
                 moved = true;
-			}
-		}
-	}
-    for(int i=0;i<4;i++){
-		for(int j=3;j>=0;j--){
-			if(!board[j][i]){
-				for(int k=j-1;k>=0;k--){
-					if(board[k][i]){
-						board[j][i]=board[k][i];
-						board[k][i]=0;
+            }
+        }
+    }
+    for (int i = 0; i < 4; i++) {
+        for (int j = 3; j >= 0; j--) {
+            if (!board[j][i]) {
+                for (int k = j - 1; k >= 0; k--) {
+                    if (board[k][i]) {
+                        board[j][i] = board[k][i];
+                        board[k][i] = 0;
                         moved = true;
-						break;
-					}
-				}
+                        break;
+                    }
+                }
             }
         }
     }
@@ -326,9 +328,11 @@ void Game::move_down() {
     }
 }
 
-
 int main() {
     srand(time(NULL));
+    cout << "Game 2048!" << endl;
+    cout << "Use the arrow keys to move the tiles." << endl;
+    cout << "Press Q to quit." << endl;
     Game game;
     game.play();
     return 0;
