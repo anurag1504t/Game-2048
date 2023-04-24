@@ -63,7 +63,7 @@ public:
                 break;
             }
         }
-        print_board();
+        
         if (has_won()) {
             cout << "Congratulations, you won with a score of " << score << "!" << endl;
         } else {
