@@ -29,6 +29,7 @@ public:
     }
 
     Game() {
+        this->board_size = 4;
         init_board();
     }
 
